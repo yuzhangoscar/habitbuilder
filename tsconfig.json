@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",                // Output ESNext syntax
+        "module": "ESNext",                // Use ES modules
+        "moduleResolution": "Node",        // Resolve modules as Node.js
+        "strict": true,                    // Enable strict mode
+        "jsx": "react",                    // If using React
+        "esModuleInterop": true,           // For compatibility with CommonJS
+        "skipLibCheck": true,              // Skip type checking of declaration files
+        "forceConsistentCasingInFileNames": true,  // Ensure consistent casing in file names
+        "resolveJsonModule": true,         // Allow importing JSON files
+        "outDir": "dist",                   // Output directory for compiled files
+        "baseUrl": "src", // Base folder for your project
+        "paths": {
+            "@/*": ["*"], // Alias '@/' maps to the 'src' folder
+            "@/components/*": ["components/*"], // Map '@/components/' to 'src/components/'
+            "@/styles/*": ["styles/*"], // Map '@/styles/' to 'src/styles/'
+            "@/utils/*": ["utils/*"], // Map '@/utils/' to 'src/utils/'
+            "@/hooks/*": ["hooks/*"] // Map '@/hooks/' to 'src/hooks/'
+        }
+    },
+    "include": ["src/**/*.ts", "src/**/*.tsx"]  // Adjust if necessary
+}
