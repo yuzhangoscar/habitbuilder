@@ -13,14 +13,19 @@
 }
 
 .day-dot {
-    width: 10px;
-    height: 10px;
+    width: 20px;
+    height: 20px;
+    margin: 2px;
+    background-color: #ccc;
     border-radius: 50%;
-    background-color: gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
 }
 
 .day-dot.completed {
-    background-color: green;
+    background-color: #4caf50;
 }
 
 .habit-list {
@@ -46,4 +51,67 @@ button {
 
 button:hover {
     background-color: #0056b3;
+}
+
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.task-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.task-dot {
+    width: 20px;
+    height: 20px;
+    margin: 5px;
+    background-color: #4caf50;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 12px;
+}
+
+.calendar {
+    display: flex;
+    flex-direction: column;
+}
+
+.week {
+    display: flex;
 }

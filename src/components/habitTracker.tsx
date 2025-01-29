@@ -9,6 +9,27 @@ interface Habit {
 
 const daysInYear = 365;
 
+const getDateFromDayIndex = (dayIndex: number) => {
+    const startDate = new Date(new Date().getFullYear(), 0, 1); // January 1st of the current year
+    const date = new Date(startDate);
+    date.setDate(startDate.getDate() + dayIndex);
+    return date;
+};
+
+const getCalendar = () => {
+    const calendar = [];
+    let week = [];
+    for (let i = 0; i < daysInYear; i++) {
+        const date = getDateFromDayIndex(i);
+        week.push({ date, index: i });
+        if (date.getDay() === 6 || i === daysInYear - 1) {
+            calendar.push(week);
+            week = [];
+        }
+    }
+    return calendar;
+};
+
 export const HabitTracker = () => {
     const [dailyCompletion, setDailyCompletion] = useState<boolean[]>(
         Array(daysInYear).fill(false)
@@ -18,6 +39,9 @@ export const HabitTracker = () => {
         { id: 1, name: 'Exercise', completed: false },
         { id: 2, name: 'Drink Water', completed: false },
     ]);
+
+    const [selectedDay, setSelectedDay] = useState<number | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
     const toggleTask = (taskId: number) => {
         setHabits((prev) =>
@@ -35,14 +59,34 @@ export const HabitTracker = () => {
         });
     };
 
+    const openModal = (dayIndex: number) => {
+        console.log(`Opening modal for day index: ${dayIndex}`);
+        setSelectedDay(dayIndex);
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        console.log('Closing modal');
+        setSelectedDay(null);
+        setIsModalOpen(false);
+    };
+
+    const calendar = getCalendar();
+
     return (
         <div className="habit-tracker">
-            <div className="yearly-progress">
-                {dailyCompletion.map((isCompleted, index) => (
-                    <div
-                        key={index}
-                        className={`day-dot ${isCompleted ? 'completed' : ''}`}
-                    ></div>
+            <div className="calendar">
+                {calendar.map((week, weekIndex) => (
+                    <div key={weekIndex} className="week">
+                        {week.map(({ date, index }) => (
+                            <div
+                                key={index}
+                                className={`day-dot ${dailyCompletion[index] ? 'completed' : ''}`}
+                                title={date.toDateString()}
+                                onClick={() => openModal(index)}
+                            ></div>
+                        ))}
+                    </div>
                 ))}
             </div>
 
@@ -56,6 +100,22 @@ export const HabitTracker = () => {
                     </div>
                 ))}
             </div>
+
+            {isModalOpen && selectedDay !== null && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <span className="close" onClick={closeModal}>&times;</span>
+                        <h2>Tasks for {getDateFromDayIndex(selectedDay).toDateString()}</h2>
+                        <div className="task-list">
+                            {habits.map((habit) => (
+                                <div key={habit.id} className="task-dot">
+                                    {habit.name}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
